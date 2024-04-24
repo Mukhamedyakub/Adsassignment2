@@ -81,3 +81,69 @@ public class MyArrayList<T> implements MyList<T> {
     public T getLast() {
         return get(size - 1);
     }
+
+// Remove an element at a specific index
+    public T remove(int index) {
+        T item = get(index);
+        int numMoved = size - index - 1;
+        if (numMoved > 0) {
+            // Shift elements to the left to fill the gap
+            System.arraycopy(elements, index + 1, elements, index, numMoved);
+        }
+        elements[--size] = null; // Clear to let GC do its work and decrement size
+        return item;
+    }
+
+    // Remove the first element of the list
+    public T removeFirst() {
+        return remove(0);
+    }
+
+    // Remove the last element of the list
+    public T removeLast() {
+        return remove(size - 1);
+    }
+
+    // Clear the list
+    public void clear() {
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
+        size = 0;
+    }
+
+    // Return the number of elements in the list
+    public int size() {
+        return size;
+    }
+
+    // Check if the list is empty
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    // Find the index of the first occurrence of an object
+    public int indexOf(Object object) {
+        for (int i = 0; i < size; i++)
+            if (object.equals(elements[i]))
+                return i;
+        return -1;
+    }
+
+    // Find the index of the last occurrence of an object
+    public int lastIndexOf(Object object) {
+        for (int i = size - 1; i >= 0; i--)
+            if (object.equals(elements[i]))
+                return i;
+        return -1;
+    }
+
+    // Check if the list contains a certain object
+    public boolean exists(Object object) {
+        return indexOf(object) >= 0;
+    }
+
+    // Convert the list to an array
+    public Object[] toArray() {
+        return Arrays.copyOf(elements, size);
+    }
