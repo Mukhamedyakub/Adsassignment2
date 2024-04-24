@@ -1,9 +1,83 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
-    <content url="file://D:/DownloadsUniversity/MyArrayList.java" />
-    <orderEntry type="inheritedJdk" />
-    <orderEntry type="sourceFolder" forTests="false" />
-  </component>
-</module>
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class MyArrayList<T> implements MyList<T> {
+    // Array to hold the list's elements
+    private Object[] elements;
+    // The current number of elements in the list
+    private int size;
+
+    // Constructor initializes the list with an initial capacity
+    public MyArrayList() {
+        elements = new Object[10];
+        size = 0;
+    }
+
+    // Ensure enough space in the array to add more elements
+    private void ensureCapacity() {
+        // If the current size equals the length of the array, increase capacity
+        if (size >= elements.length) {
+            // Double the size of the array when expanding
+            Object[] newElements = new Object[size * 2];
+            // Copy existing elements into the new array
+            System.arraycopy(elements, 0, newElements, 0, size);
+            elements = newElements;
+        }
+    }
+
+    // Add an element to the end of the list
+    @Override
+    public void add(T item) {
+        ensureCapacity();  // Check and increase capacity if necessary
+        elements[size++] = item;  // Add the item and increment the size
+    }
+
+    // Get an element at a specific index
+    @SuppressWarnings("unchecked")
+    public T get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        return (T) elements[index];
+    }
+
+    // Set an element at a specific index
+    public void set(int index, T item) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        elements[index] = item;
+    }
+
+    // Add an element at a specific index
+    public void add(int index, T item) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        }
+        ensureCapacity();  // Make sure there's enough space
+        // Shift elements to the right to make space for the new element
+        System.arraycopy(elements, index, elements, index + 1, size - index);
+        elements[index] = item;
+        size++; // number of actual elements in array
+    }
+
+    // Add an element at the start of the list
+    public void addFirst(T item) {
+        add(0, item);
+    }
+
+    // Add an element at the end of the list
+    public void addLast(T item) {
+        add(size, item);
+    }
+
+    // Get the first element of the list
+    public T getFirst() {
+        return get(0);
+    }
+
+    // Get the last element of the list
+    public T getLast() {
+        return get(size - 1);
+    }
