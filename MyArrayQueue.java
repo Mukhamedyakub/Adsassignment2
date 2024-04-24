@@ -53,3 +53,24 @@ public class MyArrayQueue<T> {
         // Returns the first element without removing it, which is the front of the queue.
         return list.getFirst();
     }
+
+    /**
+     * Checks if the queue is empty.
+     *
+     * @return true if the queue contains no elements, false otherwise
+     */
+    public boolean isEmpty() {
+        // Delegates the call to isEmpty of MyArrayList.
+        return list.isEmpty();
+    }
+
+    /**
+     * Returns the number of elements in this queue.
+     *
+     * @return the number of elements in this queue
+     */
+    public int size() {
+        // Returns the count of elements in the list, which represents the size of the queue.
+        return list.size();
+    }
+}
