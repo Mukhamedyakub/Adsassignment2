@@ -22,3 +22,34 @@ public class MyArrayQueue<T> {
         // which represents the back of the queue.
         list.addLast(item);
     }
+
+    /**
+     * Removes and returns the item at the front of the queue.
+     *
+     * @return the item at the front of the queue
+     * @throws NoSuchElementException if the queue is empty
+     */
+    public T dequeue() {
+        // Before removing the first item, checks if the queue is empty to avoid errors.
+        // Throws NoSuchElementException if no elements can be dequeued.
+        if (list.isEmpty()) {
+            throw new NoSuchElementException("Queue is empty.");
+        }
+        // Removes and returns the first element of the list, which is the front of the queue.
+        return list.removeFirst();
+    }
+
+    /**
+     * Retrieves, but does not remove, the head of this queue.
+     *
+     * @return the head of the queue
+     * @throws NoSuchElementException if the queue is empty
+     */
+    public T peek() {
+        // Checks if the queue is empty before attempting to peek to prevent errors.
+        if (list.isEmpty()) {
+            throw new NoSuchElementException("Queue is empty.");
+        }
+        // Returns the first element without removing it, which is the front of the queue.
+        return list.getFirst();
+    }
