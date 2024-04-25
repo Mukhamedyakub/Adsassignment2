@@ -212,4 +212,43 @@ public class MyLinkedList <T> implements MyList<T> {
     }
 
     // Get the node at the specified index
+    private Node<T> getNode(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException(); // Throw exception if index is invalid
+        }
+        Node<T> x;
+        if (index < (size >> 1)) {
+            x = head;
+            for (int i = 0; i < index; i++) {
+                x = x.next; // Traverse forward from the head
+            }
+        } else {
+            x = tail;
+            for (int i = size - 1; i > index; i--) {
+                x = x.prev; // Traverse backward from the tail
+            }
+        }
+        return x; // Return the node at the specified index
+    }
 
+    // Iterator implementation to iterate over the elements of the linked list
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private Node<T> next = head; // Initialize next node to the head
+
+            @Override
+            public boolean hasNext() {
+                return next != null; // Check if there is a next node
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) throw new NoSuchElementException(); // Throw exception if there is no next node
+                T element = next.element; // Get the element of the next node
+                next = next.next; // Move to the next node
+                return element; // Return the element
+            }
+        };
+    }
+}
