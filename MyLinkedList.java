@@ -83,4 +83,51 @@ public class MyLinkedList <T> implements MyList<T> {
         tail = newNode; // Update tail
         size++; // Increment size
     }
-    
+
+    // Get the element at the specified index
+    public T get(int index) {
+        Node<T> node = getNode(index); // Get the node at the specified index
+        if (node != null) {
+            return node.element; // Return the element of the node
+        } else {
+            throw new IndexOutOfBoundsException(); // Throw exception if index is invalid
+        }
+    }
+
+    // Get the first element of the linked list
+    public T getFirst() {
+        if (head == null) {
+            throw new NoSuchElementException(); // Throw exception if the list is empty
+        }
+        return head.element; // Return the element of the head node
+    }
+
+    // Get the last element of the linked list
+    public T getLast() {
+        if (tail == null) {
+            throw new NoSuchElementException(); // Throw exception if the list is empty
+        }
+        return tail.element; // Return the element of the tail node
+    }
+
+    // Remove the item at the specified index
+    public T remove(int index) {
+        Node<T> node = getNode(index); // Get the node at the specified index
+        if (node != null) {
+            if (node.prev != null) {
+                node.prev.next = node.next; // Adjust references to remove the node
+            } else {
+                head = node.next; // Update head if removing the first node
+            }
+            if (node.next != null) {
+                node.next.prev = node.prev; // Adjust references to remove the node
+            } else {
+                tail = node.prev; // Update tail if removing the last node
+            }
+            size--; // Decrement size
+            return node.element; // Return the removed element
+        } else {
+            throw new IndexOutOfBoundsException(); // Throw exception if index is invalid
+        }
+    }
+
