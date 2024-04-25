@@ -131,3 +131,42 @@ public class MyLinkedList <T> implements MyList<T> {
         }
     }
 
+    // Remove the first item in the linked list
+    public T removeFirst() {
+        if (head != null) {
+            remove(0); // Delegate to remove method to remove the first node
+        } else {
+            throw new NoSuchElementException(); // Throw exception if the list is empty
+        }
+        return null;
+    }
+
+    // Remove the last item in the linked list
+    public T removeLast() {
+        if (tail != null) {
+            remove(size - 1); // Delegate to remove method to remove the last node
+        } else {
+            throw new NoSuchElementException(); // Throw exception if the list is empty
+        }
+        return null;
+    }
+
+    // This is a placeholder for a more efficient sorting algorithm
+    public void sort() {
+        // Sorting a linked list efficiently typically requires algorithms like merge sort
+        // This method is just a placeholder
+    }
+
+    // Get the index of the first occurrence of the given object
+    public int indexOf(Object object) {
+        int index = 0; // Initialize index
+        for (Node<T> x = head; x != null; x = x.next, index++) {
+            if (object.equals(x.element)) {
+                return index; // Return index if object is found
+            }
+        }
+        return -1; // Return -1 if object is not found
+    }
+
+    // Get the index of the last occurrence of the given object
+
