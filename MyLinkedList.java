@@ -43,3 +43,44 @@ public class MyLinkedList <T> implements MyList<T> {
         }
     }
 
+    // Add an item at the specified index
+    public void add(int index, T item) {
+        if (index == size) {
+            addLast(item); // If index is at the end, delegate to addLast method
+        } else {
+            Node<T> current = getNode(index); // Get the node at the specified index
+            Node<T> newNode = new Node<>(item, current, current.prev); // Create a new node
+            if (current.prev != null) {
+                current.prev.next = newNode; // Adjust references for the new node
+            } else {
+                head = newNode; // Update head if adding at the beginning
+            }
+            current.prev = newNode; // Update previous reference of the current node
+            size++; // Increment size
+        }
+    }
+
+    // Add an item to the beginning of the linked list
+    public void addFirst(T item) {
+        Node<T> newNode = new Node<>(item, head, null); // Create a new node
+        if (head != null) {
+            head.prev = newNode; // Adjust references for the new node
+        } else {
+            tail = newNode; // Update tail if adding to an empty list
+        }
+        head = newNode; // Update head
+        size++; // Increment size
+    }
+
+    // Add an item to the end of the linked list
+    public void addLast(T item) {
+        Node<T> newNode = new Node<>(item, null, tail); // Create a new node
+        if (tail != null) {
+            tail.next = newNode; // Adjust references for the new node
+        } else {
+            head = newNode; // Update head if adding to an empty list
+        }
+        tail = newNode; // Update tail
+        size++; // Increment size
+    }
+    
