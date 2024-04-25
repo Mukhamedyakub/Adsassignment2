@@ -50,4 +50,4 @@ public class MyArrayStack<T> {
         return list.size();
     }
 }
-    
+
