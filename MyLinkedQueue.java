@@ -25,4 +25,30 @@ public class MyLinkedQueue<T> {
             this.next = next;
         }
     }
-    
+
+    /**
+     * Constructor to initialize an empty queue.
+     */
+    public MyLinkedQueue() {
+        this.head = null; // Initialize the head of the queue as null
+        this.tail = null; // Initialize the tail of the queue as null
+        this.size = 0;   // Initialize the size of the queue as 0
+    }
+
+    /**
+     * Enqueues an item to the back of the queue.
+     *
+     * @param item the item to be added to the queue
+     */
+    public void enqueue(T item) {
+        Node<T> newNode = new Node<>(item, null); // Create a new node for the item
+        if (tail == null) {
+            head = tail = newNode; // If the queue is empty, head and tail point to the new node
+        } else {
+            tail.next = newNode; // Link the new node at the end of the queue
+            tail = newNode; // Update the tail to the new node
+        }
+        size++; // Increment the size of the queue
+    }
+
+
