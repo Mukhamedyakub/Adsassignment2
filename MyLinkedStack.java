@@ -28,3 +28,37 @@ public class MyLinkedStack<T> {
     /**
      * Constructor to initialize an empty stack.
      */
+    public MyLinkedStack() {
+        this.top = null; // Initialize the top of the stack as null
+        this.size = 0;   // Initialize the size of the stack as 0
+    }
+
+    /**
+     * Pushes an item onto the top of the stack.
+     *
+     * @param item the item to be pushed onto the stack
+     */
+    public void push(T item) {
+        // Create a new node with the item, making it the new top of the stack
+        // The new node points to the previous top node
+        top = new Node<>(item, top);
+        size++; // Increment the size of the stack
+    }
+
+    /**
+     * Removes the item at the top of the stack and returns it.
+     *
+     * @return the item at the top of the stack
+     * @throws NoSuchElementException if the stack is empty
+     */
+    public T pop() {
+        if (top == null) { // Check if the stack is empty
+            throw new NoSuchElementException("Stack is empty.");
+        }
+        T item = top.element; // Get the item from the top of the stack
+        top = top.next; // Remove the top node by moving the top reference to the next node
+        size--; // Decrement the size of the stack
+        return item; // Return the removed item
+    }
+
+
