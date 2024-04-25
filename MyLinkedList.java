@@ -169,4 +169,47 @@ public class MyLinkedList <T> implements MyList<T> {
     }
 
     // Get the index of the last occurrence of the given object
+    public int lastIndexOf(Object object) {
+        int index = size; // Initialize index
+        for (Node<T> x = tail; x != null; x = x.prev, index--) {
+            if (object.equals(x.element)) {
+                return index; // Return index if object is found
+            }
+        }
+        return -1; // Return -1 if object is not found
+    }
+
+    // Check if the given object exists in the linked list
+    public boolean exists(Object object) {
+        return indexOf(object) >= 0; // Return true if object is found
+    }
+
+    // Convert the linked list to an array
+    public Object[] toArray() {
+        Object[] array = new Object[size]; // Create an array of size equal to the list size
+        int i = 0; // Initialize index
+        for (Node<T> x = head; x != null; x = x.next) {
+            array[i++] = x.element; // Copy elements of the linked list to the array
+        }
+        return array; // Return the array
+    }
+
+    // Clear the linked list
+    public void clear() {
+        head = null; // Set head to null
+        tail = null; // Set tail to null
+        size = 0; // Reset size to 0
+    }
+
+    // Get the size of the linked list
+    public int size() {
+        return size; // Return the size of the linked list
+    }
+
+    // Check if the linked list is empty
+    public boolean isEmpty() {
+        return size == 0; // Return true if the size is 0
+    }
+
+    // Get the node at the specified index
 
