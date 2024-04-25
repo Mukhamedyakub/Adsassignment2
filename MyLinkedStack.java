@@ -74,4 +74,21 @@ public class MyLinkedStack<T> {
         return top.element; // Return the item from the top of the stack
     }
 
+    /**
+     * Returns the number of elements in the stack.
+     *
+     * @return the size of the stack
+     */
+    public int size() {
+        return size; // Return the size of the stack
+    }
 
+    /**
+     * Checks if the stack is empty.
+     *
+     * @return true if the stack has no elements, false otherwise
+     */
+    public boolean isEmpty() {
+        return top == null; // Return true if the top is null, indicating the stack is empty
+    }
+}
