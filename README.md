@@ -28,5 +28,5 @@ This repository contains implementations of fundamental data structures using bo
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/data-structures-library.git
-cd data-structures-library
+git clone https://github.com/Mukhamedyakub/Adsassignment2.git
+
