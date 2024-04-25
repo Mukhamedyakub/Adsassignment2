@@ -61,4 +61,17 @@ public class MyLinkedStack<T> {
         return item; // Return the removed item
     }
 
+    /**
+     * Returns the item at the top of the stack without removing it.
+     *
+     * @return the item at the top of the stack
+     * @throws NoSuchElementException if the stack is empty
+     */
+    public T peek() {
+        if (top == null) { // Check if the stack is empty
+            throw new NoSuchElementException("Stack is empty.");
+        }
+        return top.element; // Return the item from the top of the stack
+    }
+
 
