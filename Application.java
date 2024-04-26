@@ -62,4 +62,17 @@ public class Application {
         }
         System.out.println("Is the stack empty? " + linkedListStack.isEmpty());
 
+        // Queue Example using LinkedList
+        System.out.println("\n--- LinkedList Queue Example ---");
+        MyLinkedQueue<String> linkedListQueue = new MyLinkedQueue<>();
+        linkedListQueue.enqueue("Monday");
+        linkedListQueue.enqueue("Tuesday");
+        linkedListQueue.enqueue("Wednesday");
 
+        System.out.println("First element (Peek): " + linkedListQueue.peek());
+        System.out.println("Dequeuing elements...");
+        while (!linkedListQueue.isEmpty()) {
+            System.out.println("Dequeued: " + linkedListQueue.dequeue());
+        }
+        System.out.println("Is the queue empty? " + linkedListQueue.isEmpty());
+        
