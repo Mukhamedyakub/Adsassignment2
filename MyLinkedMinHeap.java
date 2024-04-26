@@ -182,4 +182,21 @@ public class MyLinkedMinHeap<T extends Comparable<T>> {
         return (index - 1) / 2; // Standard calculation for finding the parent in a heap
     }
 
+    /**
+     * Checks if the min heap is empty.
+     *
+     * @return true if the heap has no elements, false otherwise
+     */
+    public boolean isEmpty() {
+        return list.isEmpty();
+    }
 
+    /**
+     * Returns the number of items in the min heap.
+     *
+     * @return the size of the heap
+     */
+    public int size() {
+        return list.size();
+    }
+}
