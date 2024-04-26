@@ -77,3 +77,32 @@ public class MyArrayMinHeap<T extends Comparable<T>> {
      *
      * index the starting index to begin heapify
      */
+    private void heapify(int index) {
+        int left = leftChildOf(index); // Get left child index
+        int right = rightChildOf(index); // Get right child index
+        int smallest = index;
+
+        // Determine the smallest of the start, left, and right nodes
+        if (left < elements.size() && elements.get(left).compareTo(elements.get(smallest)) < 0) {
+            smallest = left;
+        }
+        if (right < elements.size() && elements.get(right).compareTo(elements.get(smallest)) < 0) {
+            smallest = right;
+        }
+        if (smallest != index) {
+            swap(index, smallest); // Swap if the smallest is not the start index
+            heapify(smallest); // Recursively heapify the affected subtree
+        }
+    }
+
+    /**
+     * Moves an element upwards in the heap until the heap property is restored.
+     *
+     * index the index of the element to move up
+     */
+    private void traverseUp(int index) {
+        while (index != 0 && elements.get(parentOf(index)).compareTo(elements.get(index)) > 0) {
+            swap(index, parentOf(index)); // Swap with parent if the current node is smaller than the parent
+            index = parentOf(index); // Move up to the parent's index
+        }
+    }
