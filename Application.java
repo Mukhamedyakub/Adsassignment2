@@ -31,4 +31,21 @@ public class Application {
         }
         System.out.println("Is the queue empty? " + arrayListQueue.isEmpty());
 
+        // MinHeap Example using ArrayList
+        System.out.println("\n--- ArrayList MinHeap Example ---");
+        MyArrayMinHeap<Integer> arrayListMinHeap = new MyArrayMinHeap<>();
+        arrayListMinHeap.insert(10);
+        arrayListMinHeap.insert(5);
+        arrayListMinHeap.insert(15);
+
+        System.out.println("Minimum element (Get Min): " + arrayListMinHeap.getMin());
+        System.out.println("Removing elements from MinHeap...");
+        while (!arrayListMinHeap.empty()) {
+            System.out.println("Extracted Min: " + arrayListMinHeap.extractMin());
+        }
+        System.out.println("Is the MinHeap empty? " + arrayListMinHeap.empty());
+
+        // Demonstrating LinkedList-based implementations
+        System.out.println("\n****** LinkedList-based Implementations ******");
+
 
