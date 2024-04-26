@@ -48,4 +48,18 @@ public class Application {
         // Demonstrating LinkedList-based implementations
         System.out.println("\n****** LinkedList-based Implementations ******");
 
+        // Stack Example using LinkedList
+        System.out.println("\n--- LinkedList Stack Example ---");
+        MyLinkedStack<String> linkedListStack = new MyLinkedStack<>();
+        linkedListStack.push("Apple");
+        linkedListStack.push("Banana");
+        linkedListStack.push("Cherry");
+
+        System.out.println("Current top (Peek): " + linkedListStack.peek());
+        System.out.println("Popping elements from the stack...");
+        while (!linkedListStack.isEmpty()) {
+            System.out.println("Popped: " + linkedListStack.pop());
+        }
+        System.out.println("Is the stack empty? " + linkedListStack.isEmpty());
+
 
