@@ -40,4 +40,45 @@ public class MyLinkedMinHeap<T extends Comparable<T>> {
         }
     }
 
+    public T extractMin() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Heap is empty.");
+        }
+        T min = list.getFirst();  // The minimum element is always at the front.
+        if (list.size() == 1) {
+            return list.removeFirst();  // If only one element, remove and return it directly.
+        }
+
+        // Replace the root with the last element
+        T last = list.removeLast();  // Remove the last element
+        list.set(0, last);  // Place the last element at the root
+
+        // Only call heapify if the list is not empty after removing the last
+        if (!isEmpty()) {
+            heapify(0);  // Restore the min heap property from the root downwards
+        }
+        return min;  // Return the minimum element
+    }
+
+    private void heapify(int index) {
+        int left = leftChildOf(index);  // Index of the left child
+        int right = rightChildOf(index);  // Index of the right child
+        int smallest = index;  // Start with the current index as the smallest
+
+        // Check if left child is smaller than current smallest
+        if (left < list.size() && list.get(left).compareTo(list.get(smallest)) < 0) {
+            smallest = left;
+        }
+
+        // Check if right child is smaller than current smallest
+        if (right < list.size() && list.get(right).compareTo(list.get(smallest)) < 0) {
+            smallest = right;
+        }
+
+        // If the smallest is not the current index, swap and continue heapifying
+        if (smallest != index) {
+            swap(index, smallest);
+            heapify(smallest);  // Recursively heapify at the new position of the smallest
+        }
+    }
 
