@@ -152,4 +152,34 @@ public class MyLinkedMinHeap<T extends Comparable<T>> {
 //        list.set(index2, temp); // Set second element to the temporary stored first
 //    }
 
+    /**
+     * Calculates the index of the left child for a given parent index.
+     *
+     * @param index the index of the parent
+     * @return the index of the left child
+     */
+    private int leftChildOf(int index) {
+        return 2 * index + 1; // Standard calculation for the left child in a heap
+    }
+
+    /**
+     * Calculates the index of the right child for a given parent index.
+     *
+     * @param index the index of the parent
+     * @return the index of the right child
+     */
+    private int rightChildOf(int index) {
+        return 2 * index + 2; // Standard calculation for the right child in a heap
+    }
+
+    /**
+     * Calculates the index of the parent for a given child index.
+     *
+     * @param index the index of the child
+     * @return the index of the parent
+     */
+    private int parentOf(int index) {
+        return (index - 1) / 2; // Standard calculation for finding the parent in a heap
+    }
+
 
