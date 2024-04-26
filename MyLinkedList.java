@@ -1,7 +1,7 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class MyLinkedList <T> implements MyList<T> {
+public class MyLinkedList<T> implements MyList<T> {
     // Define the head and tail nodes of the linked list, and keep track of the size
     private Node<T> head; // Head node of the linked list
     private Node<T> tail; // Tail node of the linked list
@@ -133,22 +133,25 @@ public class MyLinkedList <T> implements MyList<T> {
 
     // Remove the first item in the linked list
     public T removeFirst() {
+        T removed_element = null;
+
         if (head != null) {
-            remove(0); // Delegate to remove method to remove the first node
+            removed_element = remove(0); // Delegate to remove method to remove the first node
         } else {
             throw new NoSuchElementException(); // Throw exception if the list is empty
         }
-        return null;
+        return removed_element;
     }
 
     // Remove the last item in the linked list
     public T removeLast() {
+        T removed_element = null;
         if (tail != null) {
-            remove(size - 1); // Delegate to remove method to remove the last node
+            removed_element = remove(size - 1); // Delegate to remove method to remove the last node
         } else {
             throw new NoSuchElementException(); // Throw exception if the list is empty
         }
-        return null;
+        return removed_element;
     }
 
     // This is a placeholder for a more efficient sorting algorithm
@@ -250,5 +253,59 @@ public class MyLinkedList <T> implements MyList<T> {
                 return element; // Return the element
             }
         };
+    }
+    public static void main(String[] args) {
+        // Demonstrating LinkedList-based implementations
+        System.out.println("\n****** LinkedList-based Implementations ******");
+
+        // Stack Example using LinkedList
+        System.out.println("\n--- LinkedList Stack Example ---");
+        MyLinkedStack<String> linkedListStack = new MyLinkedStack<>();
+        linkedListStack.push("Apple");
+        linkedListStack.push("Banana");
+        linkedListStack.push("Cherry");
+
+        System.out.println("Current top (Peek): " + linkedListStack.peek());
+        System.out.println("Popping elements from the stack...");
+        while (!linkedListStack.isEmpty()) {
+            System.out.println("Popped: " + linkedListStack.pop());
+        }
+        System.out.println("Is the stack empty? " + linkedListStack.isEmpty());
+
+        // Queue Example using LinkedList
+        System.out.println("\n--- LinkedList Queue Example ---");
+        MyLinkedQueue<String> linkedListQueue = new MyLinkedQueue<>();
+        linkedListQueue.enqueue("Monday");
+        linkedListQueue.enqueue("Tuesday");
+        linkedListQueue.enqueue("Wednesday");
+
+        System.out.println("First element (Peek): " + linkedListQueue.peek());
+        System.out.println("Dequeuing elements...");
+        while (!linkedListQueue.isEmpty()) {
+            System.out.println("Dequeued: " + linkedListQueue.dequeue());
+        }
+        System.out.println("Is the queue empty? " + linkedListQueue.isEmpty());
+
+        System.out.println("\n--- LinkedList MinHeap Example ---");
+        MyLinkedMinHeap<Integer> linkedListMinHeap = new MyLinkedMinHeap<>();
+
+        // Insert elements into the MinHeap
+        System.out.println("Inserting elements into MinHeap:");
+        int[] numbers = {10, 5, 15, 3, 8, 20, 2};
+        for (int number : numbers) {
+            linkedListMinHeap.add(number);
+            System.out.println("Inserted: " + number);
+        }
+        // Display the minimum element without removing it
+//        System.out.println("\nCurrent Minimum (Peek): " + linkedListMinHeap.getMin());
+
+        // Extracting elements from the MinHeap
+        System.out.println("\nExtracting all elements from MinHeap in sorted order:");
+        while (!linkedListMinHeap.isEmpty()) {
+            System.out.println("Extracted Min: " + linkedListMinHeap.extractMin());
+        }
+
+        // Check if the MinHeap is empty after removals
+        System.out.println("\nIs the MinHeap empty? " + linkedListMinHeap.isEmpty());
     }
 }
