@@ -106,3 +106,30 @@ public class MyArrayMinHeap<T extends Comparable<T>> {
             index = parentOf(index); // Move up to the parent's index
         }
     }
+
+    // Utility methods for computing the positions of parent and children in the array-based heap
+
+    private int leftChildOf(int index) {
+        return 2 * index + 1; // Index of the left child
+    }
+
+    private int rightChildOf(int index) {
+        return 2 * index + 2; // Index of the right child
+    }
+
+    private int parentOf(int index) {
+        return (index - 1) / 2; // Index of the parent
+    }
+
+    /**
+     * Swaps two elements in the underlying MyArrayList by their indices.
+     *
+     * index1 the index of the first element to swap
+     * index2 the index of the second element to swap
+     */
+    private void swap(int index1, int index2) {
+        T temp = elements.get(index1); // Temporary storage for the first element
+        elements.set(index1, elements.get(index2)); // Swap first with second
+        elements.set(index2, temp); // Set second with stored first
+    }
+}
