@@ -91,6 +91,7 @@ public class MyArrayList<T> implements MyList<T> {
             System.arraycopy(elements, index + 1, elements, index, numMoved);
         }
         elements[--size] = null; // Clear to let GC do its work and decrement size
+
         return item;
     }
 
@@ -186,277 +187,50 @@ public class MyArrayList<T> implements MyList<T> {
             }
         };
     }
+    public static void main(String[] args) {
+        // Demonstrating ArrayList-based implementations
+        System.out.println("****** ArrayList-based Implementations ******");
+
+        // Stack Example using ArrayList
+        System.out.println("\n--- ArrayList Stack Example ---");
+        MyArrayStack<String> arrayListStack = new MyArrayStack<>();
+        arrayListStack.push("Apple");
+        arrayListStack.push("Banana");
+        arrayListStack.push("Cherry");
+
+        System.out.println("Current top (Peek): " + arrayListStack.peek());
+        System.out.println("Popping elements from the stack...");
+        while (!arrayListStack.isEmpty()) {
+            System.out.println("Popped: " + arrayListStack.pop());
+        }
+        System.out.println("Is the stack empty? " + arrayListStack.isEmpty());
+
+        // Queue Example using ArrayList
+        System.out.println("\n--- ArrayList Queue Example ---");
+        MyArrayQueue<String> arrayListQueue = new MyArrayQueue<>();
+        arrayListQueue.enqueue("Monday");
+        arrayListQueue.enqueue("Tuesday");
+        arrayListQueue.enqueue("Wednesday");
+
+        System.out.println("First element (Peek): " + arrayListQueue.peek());
+        System.out.println("Dequeuing elements...");
+        while (!arrayListQueue.isEmpty()) {
+            System.out.println("Dequeued: " + arrayListQueue.dequeue());
+        }
+        System.out.println("Is the queue empty? " + arrayListQueue.isEmpty());
+
+        // MinHeap Example using ArrayList
+        System.out.println("\n--- ArrayList MinHeap Example ---");
+        MyArrayMinHeap<Integer> arrayListMinHeap = new MyArrayMinHeap<>();
+        arrayListMinHeap.insert(10);
+        arrayListMinHeap.insert(5);
+        arrayListMinHeap.insert(15);
+
+        System.out.println("Minimum element (Get Min): " + arrayListMinHeap.getMin());
+        System.out.println("Removing elements from MinHeap...");
+        while (!arrayListMinHeap.empty()) {
+            System.out.println("Extracted Min: " + arrayListMinHeap.extractMin());
+        }
+        System.out.println("Is the MinHeap empty? " + arrayListMinHeap.empty());
+    }
 }
-
-/*************** Stack *******************/
-
-//// MyStack class definition with a generic type T
-//public class MyArrayStack<T> {
-//    // Private member variable to hold the stack elements using MyArrayList
-//    private MyArrayList<T> list;
-//
-//    // Constructor that initializes the stack by creating an instance of MyArrayList
-//    public MyArrayStack() {
-//        list = new MyArrayList<>();
-//    }
-//
-//    // Method to add an item to the top of the stack
-//    public void push(T item) {
-//        // Adds the item to the end of the list which represents the top of the stack
-//        list.addLast(item);
-//    }
-//
-//    // Method to remove and return the top item from the stack
-//    public T pop() {
-//        // Checks if the stack is empty before attempting to remove an item
-//        if (list.isEmpty()) {
-//            // Throws NoSuchElementException if there are no items to pop
-//            throw new NoSuchElementException("Stack is empty.");
-//        }
-//        // Removes the last item of the list which is the top of the stack
-//        return list.removeLast();
-//    }
-//
-//    // Method to retrieve, without removing, the top item of the stack
-//    public T peek() {
-//        // Checks if the stack is empty before attempting to peek at the top item
-//        if (list.isEmpty()) {
-//            // Throws NoSuchElementException if there are no items to peek
-//            throw new NoSuchElementException("Stack is empty.");
-//        }
-//        // Returns the last item of the list without removing, which is the top of the stack
-//        return list.getLast();
-//    }
-//
-//    // Method to check if the stack is empty
-//    public boolean isEmpty() {
-//        // Returns true if the stack has no elements, otherwise false
-//        return list.isEmpty();
-//    }
-//
-//    // Method to get the number of items in the stack
-//    public int size() {
-//        // Returns the number of elements in the list, which corresponds to the stack's size
-//        return list.size();
-//    }
-//}
-
-/*************** Queue *******************/
-
-/**
- * Class representing a generic queue data structure.
- * Uses MyArrayList to store the elements, providing FIFO (First-In-First-Out) queue behavior.
- *
- * @param <T> the type of elements held in this queue
- */
-//public class MyArrayQueue<T> {
-//    // The underlying list to store elements of the queue
-//    private MyArrayList<T> list;
-//
-//    /**
-//     * Constructor initializes the queue.
-//     * It creates an instance of MyArrayList to use as the internal storage for the queue.
-//     */
-//    public MyArrayQueue() {
-//        list = new MyArrayList<>();
-//    }
-//
-//    /**
-//     * Adds an item to the back of the queue.
-//     *
-//     * @param item the item to add to the queue
-//     */
-//    public void enqueue(T item) {
-//        // Utilizes the addLast method of MyArrayList to add the item at the end of the list,
-//        // which represents the back of the queue.
-//        list.addLast(item);
-//    }
-//
-//    /**
-//     * Removes and returns the item at the front of the queue.
-//     *
-//     * @return the item at the front of the queue
-//     * @throws NoSuchElementException if the queue is empty
-//     */
-//    public T dequeue() {
-//        // Before removing the first item, checks if the queue is empty to avoid errors.
-//        // Throws NoSuchElementException if no elements can be dequeued.
-//        if (list.isEmpty()) {
-//            throw new NoSuchElementException("Queue is empty.");
-//        }
-//        // Removes and returns the first element of the list, which is the front of the queue.
-//        return list.removeFirst();
-//    }
-//
-//    /**
-//     * Retrieves, but does not remove, the head of this queue.
-//     *
-//     * @return the head of the queue
-//     * @throws NoSuchElementException if the queue is empty
-//     */
-//    public T peek() {
-//        // Checks if the queue is empty before attempting to peek to prevent errors.
-//        if (list.isEmpty()) {
-//            throw new NoSuchElementException("Queue is empty.");
-//        }
-//        // Returns the first element without removing it, which is the front of the queue.
-//        return list.getFirst();
-//    }
-//
-//    /**
-//     * Checks if the queue is empty.
-//     *
-//     * @return true if the queue contains no elements, false otherwise
-//     */
-//    public boolean isEmpty() {
-//        // Delegates the call to isEmpty of MyArrayList.
-//        return list.isEmpty();
-//    }
-//
-//    /**
-//     * Returns the number of elements in this queue.
-//     *
-//     * @return the number of elements in this queue
-//     */
-//    public int size() {
-//        // Returns the count of elements in the list, which represents the size of the queue.
-//        return list.size();
-//    }
-//}
-
-/*************** MinHeap *******************/
-
-///**
-// * A MinHeap implementation using MyArrayList to store elements generically.
-// * This data structure provides efficient access to the smallest item at any time.
-// *
-// * @param <T> the type of elements in the heap, must be Comparable to determine ordering
-// */
-//public class MinHeapArray<T> {
-//    private MyArrayList<T> elements; // The underlying list that stores heap elements
-//
-//    /**
-//     * Constructor initializes the MinHeap.
-//     */
-//    public MinHeapArray() {
-//        elements = new MyArrayList<>(); // Create a new empty MyArrayList
-//    }
-//
-//    /**
-//     * Checks if the heap is empty.
-//     *
-//     * return true if the heap has no elements, false otherwise
-//     */
-//    public boolean empty() {
-//        return elements.isEmpty(); // Delegate to the isEmpty method of MyArrayList
-//    }
-//
-//    /**
-//     * Returns the number of elements currently in the heap.
-//     *
-//     * return the size of the heap
-//     */
-//    public int size() {
-//        return elements.size(); // Delegate to the size method of MyArrayList
-//    }
-//
-//    /**
-//     * Retrieves the smallest element from the heap without removing it.
-//     *
-//     * return the smallest element of the heap
-//     * throws NoSuchElementException if the heap is empty
-//     */
-//    public T getMin() {
-//        if (empty()) throw new NoSuchElementException("Heap is empty"); // Check if empty before accessing
-//        return elements.get(0); // The root element is always at index 0
-//    }
-//
-//    /**
-//     * Inserts a new item into the heap.
-//     *
-//     * item the item to be added to the heap
-//     */
-//    public void insert(T item) {
-//        elements.add(item); // Add the item at the end of the list
-//        traverseUp(elements.size() - 1); // Restore the heap order from the added item upwards
-//    }
-//
-//    /**
-//     * Removes and returns the minimum element from the heap.
-//     *
-//     * return the removed smallest element
-//     * throws NoSuchElementException if the heap is empty
-//     */
-//    public T extractMin() {
-//        if (empty()) throw new NoSuchElementException("Heap is empty"); // Ensure the heap is not empty
-//        T min = elements.get(0); // The root element, which is the smallest
-//        T lastItem = elements.remove(elements.size() - 1); // Remove the last item
-//        if (!empty()) {
-//            elements.set(0, lastItem); // Replace the root with the last item
-//            heapify(0); // Restore heap order from the root down
-//        }
-//        return min;
-//    }
-//
-//    /**
-//     * Restores the heap property starting from a given index and moving downwards.
-//     *
-//     * index the starting index to begin heapify
-//     */
-//    private void heapify(int index) {
-//        int left = leftChildOf(index); // Get left child index
-//        int right = rightChildOf(index); // Get right child index
-//        int smallest = index;
-//
-//        // Determine the smallest of the start, left, and right nodes
-//        if (left < elements.size() && elements.get(left).compareTo(elements.get(smallest)) < 0) {
-//            smallest = left;
-//        }
-//        if (right < elements.size() && elements.get(right).compareTo(elements.get(smallest)) < 0) {
-//            smallest = right;
-//        }
-//        if (smallest != index) {
-//            swap(index, smallest); // Swap if the smallest is not the start index
-//            heapify(smallest); // Recursively heapify the affected subtree
-//        }
-//    }
-//
-//    /**
-//     * Moves an element upwards in the heap until the heap property is restored.
-//     *
-//     * index the index of the element to move up
-//     */
-//    private void traverseUp(int index) {
-//        while (index != 0 && elements.get(parentOf(index)).compareTo(elements.get(index)) > 0) {
-//            swap(index, parentOf(index)); // Swap with parent if the current node is smaller than the parent
-//            index = parentOf(index); // Move up to the parent's index
-//        }
-//    }
-//
-//    // Utility methods for computing the positions of parent and children in the array-based heap
-//
-//    private int leftChildOf(int index) {
-//        return 2 * index + 1; // Index of the left child
-//    }
-//
-//    private int rightChildOf(int index) {
-//        return 2 * index + 2; // Index of the right child
-//    }
-//
-//    private int parentOf(int index) {
-//        return (index - 1) / 2; // Index of the parent
-//    }
-//
-//    /**
-//     * Swaps two elements in the underlying MyArrayList by their indices.
-//     *
-//     * index1 the index of the first element to swap
-//     * index2 the index of the second element to swap
-//     */
-//    private void swap(int index1, int index2) {
-//        T temp = elements.get(index1); // Temporary storage for the first element
-//        elements.set(index1, elements.get(index2)); // Swap first with second
-//        elements.set(index2, temp); // Set second with stored first
-//    }
-//}
-
