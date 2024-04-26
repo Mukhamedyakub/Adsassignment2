@@ -51,4 +51,41 @@ public class MyLinkedQueue<T> {
         size++; // Increment the size of the queue
     }
 
+    /**
+     * Dequeues the item at the front of the queue and returns it.
+     *
+     * @return the item at the front of the queue
+     * @throws NoSuchElementException if the queue is empty
+     */
+    public T dequeue() {
+        if (head == null) { // Check if the queue is empty
+            throw new NoSuchElementException("Queue is empty.");
+        }
+        T item = head.element; // Retrieve the element from the head node
+        head = head.next; // Move the head to the next node in the queue
+        if (head == null) {
+            tail = null; // If the queue is now empty, tail must also be null
+        }
+        size--; // Decrement the size of the queue
+        return item; // Return the dequeued item
+    }
+
+    /**
+     * Returns the item at the front of the queue without removing it.
+     *
+     * @return the item at the front of the queue
+     * @throws NoSuchElementException if the queue is empty
+     */
+    public T peek() {
+        if (head == null) { // Check if the queue is empty
+            throw new NoSuchElementException("Queue is empty.");
+        }
+        return head.element; // Return the element from the head node
+    }
+
+    /**
+     * Returns the number of elements in the queue.
+     *
+     * @return the size of the queue
+     */
 
