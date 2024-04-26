@@ -75,4 +75,19 @@ public class Application {
             System.out.println("Dequeued: " + linkedListQueue.dequeue());
         }
         System.out.println("Is the queue empty? " + linkedListQueue.isEmpty());
-        
+
+        // MinHeap Example using LinkedList
+        System.out.println("\n--- LinkedList MinHeap Example ---");
+        MyLinkedMinHeap<Integer> linkedListMinHeap = new MyLinkedMinHeap<>();
+        linkedListMinHeap.add(10);
+        linkedListMinHeap.add(5);
+        linkedListMinHeap.add(15);
+
+        System.out.println("Minimum element (Get Min): " + linkedListMinHeap.extractMin());
+        System.out.println("Removing elements from MinHeap...");
+        while (!linkedListMinHeap.isEmpty()) {
+            System.out.println("Extracted Min: " + linkedListMinHeap.extractMin());
+        }
+        System.out.println("Is the MinHeap empty? " + linkedListMinHeap.isEmpty());
+    }
+}
