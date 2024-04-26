@@ -88,4 +88,16 @@ public class MyLinkedQueue<T> {
      *
      * @return the size of the queue
      */
+    public int size() {
+        return size; // Return the size of the queue
+    }
 
+    /**
+     * Checks if the queue is empty.
+     *
+     * @return true if the queue has no elements, false otherwise
+     */
+    public boolean isEmpty() {
+        return size == 0; // Return true if the size is 0, indicating the queue is empty
+    }
+}
