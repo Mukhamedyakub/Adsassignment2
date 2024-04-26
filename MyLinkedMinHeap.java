@@ -16,7 +16,6 @@ public class MyLinkedMinHeap<T extends Comparable<T>> {
     public MyLinkedMinHeap() {
         this.list = new MyLinkedList<>(); // Create a new linked list for storing heap elements
     }
-
     /**
      * Adds an element to the heap. This implementation places the new element at the end
      * and then ensures the heap property by "bubbling up" the element as necessary.
@@ -40,14 +39,44 @@ public class MyLinkedMinHeap<T extends Comparable<T>> {
         }
     }
 
+    private void heapify(int index) {
+        int left = leftChildOf(index);
+        int right = rightChildOf(index);
+        int smallest = index;
+
+        if (left < list.size() && list.get(left) != null &&
+                (list.get(smallest) == null || list.get(left).compareTo(list.get(smallest)) < 0)) {
+            smallest = left;
+        }
+
+        if (right < list.size() && list.get(right) != null &&
+                (list.get(smallest) == null || list.get(right).compareTo(list.get(smallest)) < 0)) {
+            smallest = right;
+        }
+
+        if (smallest != index) {
+            swap(index, smallest);
+            heapify(smallest);
+        }
+    }
+
+    private void swap(int index1, int index2) {
+        if (index1 >= 0 && index1 < list.size() && index2 >= 0 && index2 < list.size()) {
+            T temp = list.get(index1);
+            list.set(index1, list.get(index2));
+            list.set(index2, temp);
+        }
+    }
+
+
     public T extractMin() {
         if (isEmpty()) {
             throw new NoSuchElementException("Heap is empty.");
         }
-        T min = list.getFirst();  // The minimum element is always at the front.
         if (list.size() == 1) {
             return list.removeFirst();  // If only one element, remove and return it directly.
         }
+        T min = list.getFirst();  // The minimum element is always at the front.
 
         // Replace the root with the last element
         T last = list.removeLast();  // Remove the last element
@@ -60,98 +89,6 @@ public class MyLinkedMinHeap<T extends Comparable<T>> {
         return min;  // Return the minimum element
     }
 
-    private void heapify(int index) {
-        int left = leftChildOf(index);  // Index of the left child
-        int right = rightChildOf(index);  // Index of the right child
-        int smallest = index;  // Start with the current index as the smallest
-
-        // Check if left child is smaller than current smallest
-        if (left < list.size() && list.get(left).compareTo(list.get(smallest)) < 0) {
-            smallest = left;
-        }
-
-        // Check if right child is smaller than current smallest
-        if (right < list.size() && list.get(right).compareTo(list.get(smallest)) < 0) {
-            smallest = right;
-        }
-
-        // If the smallest is not the current index, swap and continue heapifying
-        if (smallest != index) {
-            swap(index, smallest);
-            heapify(smallest);  // Recursively heapify at the new position of the smallest
-        }
-    }
-
-    // Ensure that the swap method checks that the indices are valid and within the size of the list
-    private void swap(int index1, int index2) {
-        if (index1 >= 0 && index1 < list.size() && index2 >= 0 && index2 < list.size()) {
-            T temp = list.get(index1);
-            list.set(index1, list.get(index2));
-            list.set(index2, temp);
-        }
-    }
-
-
-
-
-
-//    /**
-//     * Extracts and returns the minimum element from the heap, which is always at the root,
-//     * in this case, the beginning of the list.
-//     *
-//     * @return the smallest element in the heap
-//     * @throws NoSuchElementException if the heap is empty
-//     */
-//    public T extractMin() {
-//        if (isEmpty()) {
-//            throw new NoSuchElementException("Heap is empty."); // Ensure there are elements to extract
-//        }
-//        T min = list.getFirst(); // The minimum element is always at the front
-//        T last = list.removeLast(); // Remove the last element to replace the root
-//        if (!isEmpty()) {
-//            list.set(0, last); // Place the last element at the root
-//            heapify(0); // Restore the min heap property from the root downwards
-//        }
-//        return min; // Return the minimum element
-//    }
-//
-//    /**
-//     * Restores the min heap property from a given index downwards.
-//     *
-//     * @param index the index from where to begin the heapify process
-//     */
-//    private void heapify(int index) {
-//        int left = leftChildOf(index); // Index of the left child
-//        int right = rightChildOf(index); // Index of the right child
-//        int smallest = index; // Assume the current node is the smallest
-//
-//        // Check if left child exists and is smaller than the current smallest
-//        if (left < list.size() && list.get(left).compareTo(list.get(smallest)) < 0) {
-//            smallest = left;
-//        }
-//        // Check if right child exists and is smaller than the current smallest
-//        if (right < list.size() && list.get(right).compareTo(list.get(smallest)) < 0) {
-//            smallest = right;
-//        }
-//        // If the smallest is not the current node, swap and continue heapifying
-//        if (smallest != index) {
-//            swap(index, smallest);
-//            heapify(smallest);
-//        }
-//    }
-//
-//    /**
-//     * Swaps elements at two indices in the linked list.
-//     *
-//     * @param index1 the index of the first element
-//     * @param index2 the index of the second element
-//     */
-//    private void swap(int index1, int index2) {
-//        T temp = list.get(index1); // Temporary store the first element
-//        list.set(index1, list.get(index2)); // Set first element to the second
-//        list.set(index2, temp); // Set second element to the temporary stored first
-//    }
-
     /**
      * Calculates the index of the left child for a given parent index.
      *
@@ -159,7 +96,7 @@ public class MyLinkedMinHeap<T extends Comparable<T>> {
      * @return the index of the left child
      */
     private int leftChildOf(int index) {
-        return 2 * index + 1; // Standard calculation for the left child in a heap
+        return (2 * index) + 1; // Standard calculation for the left child in a heap
     }
 
     /**
@@ -169,7 +106,7 @@ public class MyLinkedMinHeap<T extends Comparable<T>> {
      * @return the index of the right child
      */
     private int rightChildOf(int index) {
-        return 2 * index + 2; // Standard calculation for the right child in a heap
+        return (2 * index) + 2; // Standard calculation for the right child in a heap
     }
 
     /**
@@ -200,3 +137,5 @@ public class MyLinkedMinHeap<T extends Comparable<T>> {
         return list.size();
     }
 }
+
+
