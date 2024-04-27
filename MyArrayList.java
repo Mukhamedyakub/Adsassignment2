@@ -2,110 +2,179 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * This class implements a simple ArrayList-like structure that manages a list of elements with dynamic resizing.
+ * It provides basic functionalities like adding, removing, and accessing elements along with utilities
+ * like sorting and converting to array.
+ *
+ * @param <T> The type of elements in this list
+ */
 public class MyArrayList<T> implements MyList<T> {
-    // Array to hold the list's elements
-    private Object[] elements;
-    // The current number of elements in the list
-    private int size;
+    private Object[] elements; // Array to store the list elements
+    private int size;          // Current number of elements
 
-    // Constructor initializes the list with an initial capacity
+    /**
+     * Constructs an empty list with an initial capacity of ten.
+     */
     public MyArrayList() {
         elements = new Object[10];
         size = 0;
     }
 
-    // Ensure enough space in the array to add more elements
+    /**
+     * Ensures that the array has enough capacity to add more elements.
+     * If not, the size of the array is doubled.
+     */
     private void ensureCapacity() {
-        // If the current size equals the length of the array, increase capacity
         if (size >= elements.length) {
-            // Double the size of the array when expanding
             Object[] newElements = new Object[size * 2];
-            // Copy existing elements into the new array
             System.arraycopy(elements, 0, newElements, 0, size);
             elements = newElements;
         }
     }
 
-    // Add an element to the end of the list
+    /**
+     * Adds an element to the end of this list.
+     *
+     * @param item the element to be added
+     */
     @Override
     public void add(T item) {
-        ensureCapacity();  // Check and increase capacity if necessary
-        elements[size++] = item;  // Add the item and increment the size
+        ensureCapacity();
+        elements[size++] = item;
     }
 
-    // Get an element at a specific index
+    /**
+     * Returns the element at the specified position in this list.
+     *
+     * @param index index of the element to return
+     * @return the element at the specified position in this list
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
     @SuppressWarnings("unchecked")
     public T get(int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
         return (T) elements[index];
     }
 
-    // Set an element at a specific index
+    /**
+     * Replaces the element at the specified position in this list with the specified element.
+     *
+     * @param index index of the element to replace
+     * @param item element to be stored at the specified position
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
     public void set(int index, T item) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
         elements[index] = item;
     }
 
-    // Add an element at a specific index
+    /**
+     * Inserts the specified element at the specified position in this list.
+     * Shifts the element currently at that position (if any) and any subsequent elements to the right.
+     *
+     * @param index index at which the specified element is to be inserted
+     * @param item element to be inserted
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
     public void add(int index, T item) {
         if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
-        ensureCapacity();  // Make sure there's enough space
-        // Shift elements to the right to make space for the new element
+        ensureCapacity();
         System.arraycopy(elements, index, elements, index + 1, size - index);
         elements[index] = item;
-        size++; // number of actual elements in array
+        size++;
     }
 
-    // Add an element at the start of the list
+    /**
+     * Adds an element to the beginning of this list.
+     *
+     * @param item the element to be added to the start of this list
+     */
     public void addFirst(T item) {
         add(0, item);
     }
 
-    // Add an element at the end of the list
+    /**
+     * Adds an element to the end of this list.
+     *
+     * @param item the element to be added to the end of this list
+     */
     public void addLast(T item) {
         add(size, item);
     }
 
-    // Get the first element of the list
+    /**
+     * Returns the first element in this list.
+     *
+     * @return the first element in this list
+     * @throws NoSuchElementException if this list is empty
+     */
     public T getFirst() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("List is empty.");
+        }
         return get(0);
     }
 
-    // Get the last element of the list
+    /**
+     * Returns the last element in this list.
+     *
+     * @return the last element in this list
+     * @throws NoSuchElementException if this list is empty
+     */
     public T getLast() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("List is empty.");
+        }
         return get(size - 1);
     }
 
-    // Remove an element at a specific index
+    /**
+     * Removes the element at the specified position in this list.
+     *
+     * @param index the index of the element to be removed
+     * @return the element that was removed from the list
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
     public T remove(int index) {
         T item = get(index);
         int numMoved = size - index - 1;
         if (numMoved > 0) {
-            // Shift elements to the left to fill the gap
             System.arraycopy(elements, index + 1, elements, index, numMoved);
         }
-        elements[--size] = null; // Clear to let GC do its work and decrement size
-
+        elements[--size] = null; // clear to let GC do its work
         return item;
     }
 
-    // Remove the first element of the list
+    /**
+     * Removes the first element from this list.
+     *
+     * @return the first element from this list
+     * @throws NoSuchElementException if this list is empty
+     */
     public T removeFirst() {
         return remove(0);
     }
 
-    // Remove the last element of the list
+    /**
+     * Removes the last element from this list.
+     *
+     * @return the last element from this list
+     * @throws NoSuchElementException if this list is empty
+     */
     public T removeLast() {
         return remove(size - 1);
     }
 
-    // Clear the list
+    /**
+     * Removes all of the elements from this list.
+     */
     public void clear() {
         for (int i = 0; i < size; i++) {
             elements[i] = null;
@@ -113,43 +182,81 @@ public class MyArrayList<T> implements MyList<T> {
         size = 0;
     }
 
-    // Return the number of elements in the list
+    /**
+     * Returns the number of elements in this list.
+     *
+     * @return the number of elements in this list
+     */
     public int size() {
         return size;
     }
 
-    // Check if the list is empty
+    /**
+     * Returns true if this list contains no elements.
+     *
+     * @return true if this list contains no elements
+     */
     public boolean isEmpty() {
         return size == 0;
     }
 
-    // Find the index of the first occurrence of an object
+    /**
+     * Returns the index of the first occurrence of the specified element
+     * in this list, or -1 if this list does not contain the element.
+     *
+     * @param object element to search for
+     * @return the index of the first occurrence of the specified element in
+     *         this list, or -1 if this list does not contain the element
+     */
     public int indexOf(Object object) {
-        for (int i = 0; i < size; i++)
-            if (object.equals(elements[i]))
+        for (int i = 0; i < size; i++) {
+            if (object.equals(elements[i])) {
                 return i;
+            }
+        }
         return -1;
     }
 
-    // Find the index of the last occurrence of an object
+    /**
+     * Returns the index of the last occurrence of the specified element
+     * in this list, or -1 if this list does not contain the element.
+     *
+     * @param object element to search for
+     * @return the index of the last occurrence of the specified element in
+     *         this list, or -1 if this list does not contain the element
+     */
     public int lastIndexOf(Object object) {
-        for (int i = size - 1; i >= 0; i--)
-            if (object.equals(elements[i]))
+        for (int i = size - 1; i >= 0; i--) {
+            if (object.equals(elements[i])) {
                 return i;
+            }
+        }
         return -1;
     }
 
-    // Check if the list contains a certain object
+    /**
+     * Returns true if this list contains the specified element.
+     *
+     * @param object element whose presence in this list is to be tested
+     * @return true if this list contains the specified element
+     */
     public boolean exists(Object object) {
         return indexOf(object) >= 0;
     }
 
-    // Convert the list to an array
+    /**
+     * Returns an array containing all of the elements in this list in proper sequence (from first to last element).
+     *
+     * @return an array containing all of the elements in this list in proper sequence
+     */
     public Object[] toArray() {
         return Arrays.copyOf(elements, size);
     }
 
-    // Sort the list using a simple bubble sort algorithm
+    /**
+     * Sorts this list according to the natural ordering of its elements.
+     * All elements in the list must implement the Comparable interface.
+     */
     public void sort() {
         boolean sorted;
         do {
@@ -166,7 +273,11 @@ public class MyArrayList<T> implements MyList<T> {
         } while (!sorted);
     }
 
-    // Provide an iterator for the MyArrayList
+    /**
+     * Returns an iterator over the elements in this list in proper sequence.
+     *
+     * @return an Iterator over the elements in this list in proper sequence
+     */
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
@@ -186,51 +297,5 @@ public class MyArrayList<T> implements MyList<T> {
                 return (T) elements[currentIndex++];
             }
         };
-    }
-    public static void main(String[] args) {
-        // Demonstrating ArrayList-based implementations
-        System.out.println("****** ArrayList-based Implementations ******");
-
-        // Stack Example using ArrayList
-        System.out.println("\n--- ArrayList Stack Example ---");
-        MyArrayStack<String> arrayListStack = new MyArrayStack<>();
-        arrayListStack.push("Apple");
-        arrayListStack.push("Banana");
-        arrayListStack.push("Cherry");
-
-        System.out.println("Current top (Peek): " + arrayListStack.peek());
-        System.out.println("Popping elements from the stack...");
-        while (!arrayListStack.isEmpty()) {
-            System.out.println("Popped: " + arrayListStack.pop());
-        }
-        System.out.println("Is the stack empty? " + arrayListStack.isEmpty());
-
-        // Queue Example using ArrayList
-        System.out.println("\n--- ArrayList Queue Example ---");
-        MyArrayQueue<String> arrayListQueue = new MyArrayQueue<>();
-        arrayListQueue.enqueue("Monday");
-        arrayListQueue.enqueue("Tuesday");
-        arrayListQueue.enqueue("Wednesday");
-
-        System.out.println("First element (Peek): " + arrayListQueue.peek());
-        System.out.println("Dequeuing elements...");
-        while (!arrayListQueue.isEmpty()) {
-            System.out.println("Dequeued: " + arrayListQueue.dequeue());
-        }
-        System.out.println("Is the queue empty? " + arrayListQueue.isEmpty());
-
-        // MinHeap Example using ArrayList
-        System.out.println("\n--- ArrayList MinHeap Example ---");
-        MyArrayMinHeap<Integer> arrayListMinHeap = new MyArrayMinHeap<>();
-        arrayListMinHeap.insert(10);
-        arrayListMinHeap.insert(5);
-        arrayListMinHeap.insert(15);
-
-        System.out.println("Minimum element (Get Min): " + arrayListMinHeap.getMin());
-        System.out.println("Removing elements from MinHeap...");
-        while (!arrayListMinHeap.empty()) {
-            System.out.println("Extracted Min: " + arrayListMinHeap.extractMin());
-        }
-        System.out.println("Is the MinHeap empty? " + arrayListMinHeap.empty());
     }
 }
