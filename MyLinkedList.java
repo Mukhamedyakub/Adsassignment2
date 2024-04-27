@@ -1,19 +1,32 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * A custom implementation of a doubly linked list.
+ *
+ * @param <T> the type of elements held in this list
+ */
 public class MyLinkedList<T> implements MyList<T> {
-    // Define the head and tail nodes of the linked list, and keep track of the size
-    private Node<T> head; // Head node of the linked list
-    private Node<T> tail; // Tail node of the linked list
-    private int size; // Size of the linked list
+    private Node<T> head;
+    private Node<T> tail;
+    private int size;
 
-    // Inner static class representing a node in the linked list
+    /**
+     * A node within the doubly linked list which holds a data element
+     * and references to both the next and previous nodes in the list.
+     */
     private static class Node<T> {
-        T element; // Data stored in the node
-        Node<T> next; // Reference to the next node
-        Node<T> prev; // Reference to the previous node
+        T element;
+        Node<T> next;
+        Node<T> prev;
 
-        // Constructor to initialize node with an element, next, and previous references
+        /**
+         * Constructs a new node with specified data, next node, and previous node.
+         *
+         * @param element the data element stored in this node
+         * @param next the next node in the linked list
+         * @param prev the previous node in the linked list
+         */
         Node(T element, Node<T> next, Node<T> prev) {
             this.element = element;
             this.next = next;
@@ -21,291 +34,343 @@ public class MyLinkedList<T> implements MyList<T> {
         }
     }
 
-    // Constructor to initialize an empty linked list
+    /**
+     * Constructs an empty linked list.
+     */
     public MyLinkedList() {
-        head = null; // Initialize head to null
-        tail = null; // Initialize tail to null
-        size = 0; // Initialize size to 0
+        head = null;
+        tail = null;
+        size = 0;
     }
 
-    // Add an item to the end of the linked list
+    /**
+     * Appends the specified element to the end of this list.
+     *
+     * @param item element to be appended to this list
+     */
     public void add(T item) {
-        addLast(item); // Delegate to addLast method to add at the end
+        addLast(item);
     }
 
-    // Set the element at the specified index to the given item
+    /**
+     * Replaces the element at the specified position in this list with the specified element.
+     *
+     * @param index index of the element to replace
+     * @param item element to be stored at the specified position
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
     public void set(int index, T item) {
-        Node<T> node = getNode(index); // Get the node at the specified index
+        Node<T> node = getNode(index);
         if (node != null) {
-            node.element = item; // Set the element of the node to the given item
+            node.element = item;
         } else {
-            throw new IndexOutOfBoundsException(); // Throw exception if index is invalid
+            throw new IndexOutOfBoundsException();
         }
     }
 
-    // Add an item at the specified index
+    /**
+     * Inserts the specified element at the specified position in this list.
+     *
+     * @param index index at which the specified element is to be inserted
+     * @param item element to be inserted
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
     public void add(int index, T item) {
         if (index == size) {
-            addLast(item); // If index is at the end, delegate to addLast method
+            addLast(item);
         } else {
-            Node<T> current = getNode(index); // Get the node at the specified index
-            Node<T> newNode = new Node<>(item, current, current.prev); // Create a new node
+            Node<T> current = getNode(index);
+            Node<T> newNode = new Node<>(item, current, current.prev);
             if (current.prev != null) {
-                current.prev.next = newNode; // Adjust references for the new node
+                current.prev.next = newNode;
             } else {
-                head = newNode; // Update head if adding at the beginning
+                head = newNode;
             }
-            current.prev = newNode; // Update previous reference of the current node
-            size++; // Increment size
+            current.prev = newNode;
+            size++;
         }
     }
 
-    // Add an item to the beginning of the linked list
+    /**
+     * Inserts the specified element at the beginning of this list.
+     *
+     * @param item element to be inserted at the beginning of this list
+     */
     public void addFirst(T item) {
-        Node<T> newNode = new Node<>(item, head, null); // Create a new node
+        Node<T> newNode = new Node<>(item, head, null);
         if (head != null) {
-            head.prev = newNode; // Adjust references for the new node
+            head.prev = newNode;
         } else {
-            tail = newNode; // Update tail if adding to an empty list
+            tail = newNode;
         }
-        head = newNode; // Update head
-        size++; // Increment size
+        head = newNode;
+        size++;
     }
 
-    // Add an item to the end of the linked list
+    /**
+     * Appends the specified element to the end of this list.
+     *
+     * @param item element to be appended to this list
+     */
     public void addLast(T item) {
-        Node<T> newNode = new Node<>(item, null, tail); // Create a new node
+        Node<T> newNode = new Node<>(item, null, tail);
         if (tail != null) {
-            tail.next = newNode; // Adjust references for the new node
+            tail.next = newNode;
         } else {
-            head = newNode; // Update head if adding to an empty list
+            head = newNode;
         }
-        tail = newNode; // Update tail
-        size++; // Increment size
+        tail = newNode;
+        size++;
     }
 
-    // Get the element at the specified index
+    /**
+     * Returns the element at the specified position in this list.
+     *
+     * @param index index of the element to return
+     * @return the element at the specified position in this list
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
     public T get(int index) {
-        Node<T> node = getNode(index); // Get the node at the specified index
+        Node<T> node = getNode(index);
         if (node != null) {
-            return node.element; // Return the element of the node
+            return node.element;
         } else {
-            throw new IndexOutOfBoundsException(); // Throw exception if index is invalid
+            throw new IndexOutOfBoundsException();
         }
     }
 
-    // Get the first element of the linked list
+    /**
+     * Returns the first element in this list.
+     *
+     * @return the first element in this list
+     * @throws NoSuchElementException if this list is empty
+     */
     public T getFirst() {
         if (head == null) {
-            throw new NoSuchElementException(); // Throw exception if the list is empty
+            throw new NoSuchElementException();
         }
-        return head.element; // Return the element of the head node
+        return head.element;
     }
 
-    // Get the last element of the linked list
+    /**
+     * Returns the last element in this list.
+     *
+     * @return the last element in this list
+     * @throws NoSuchElementException if this list is empty
+     */
     public T getLast() {
         if (tail == null) {
-            throw new NoSuchElementException(); // Throw exception if the list is empty
+            throw new NoSuchElementException();
         }
-        return tail.element; // Return the element of the tail node
+        return tail.element;
     }
 
-    // Remove the item at the specified index
+    /**
+     * Removes the element at the specified position in this list.
+     *
+     * @param index the index of the element to be removed
+     * @return the element that was removed from the list
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
     public T remove(int index) {
-        Node<T> node = getNode(index); // Get the node at the specified index
+        Node<T> node = getNode(index);
         if (node != null) {
             if (node.prev != null) {
-                node.prev.next = node.next; // Adjust references to remove the node
+                node.prev.next = node.next;
             } else {
-                head = node.next; // Update head if removing the first node
+                head = node.next;
             }
             if (node.next != null) {
-                node.next.prev = node.prev; // Adjust references to remove the node
+                node.next.prev = node.prev;
             } else {
-                tail = node.prev; // Update tail if removing the last node
+                tail = node.prev;
             }
-            size--; // Decrement size
-            return node.element; // Return the removed element
+            size--;
+            return node.element;
         } else {
-            throw new IndexOutOfBoundsException(); // Throw exception if index is invalid
+            throw new IndexOutOfBoundsException();
         }
     }
 
-    // Remove the first item in the linked list
+    /**
+     * Removes and returns the first element from this list.
+     *
+     * @return the first element from this list
+     * @throws NoSuchElementException if this list is empty
+     */
     public T removeFirst() {
         T removed_element = null;
 
         if (head != null) {
-            removed_element = remove(0); // Delegate to remove method to remove the first node
+            removed_element = remove(0);
         } else {
-            throw new NoSuchElementException(); // Throw exception if the list is empty
+            throw new NoSuchElementException();
         }
         return removed_element;
     }
 
-    // Remove the last item in the linked list
+    /**
+     * Removes and returns the last element from this list.
+     *
+     * @return the last element from this list
+     * @throws NoSuchElementException if this list is empty
+     */
     public T removeLast() {
         T removed_element = null;
         if (tail != null) {
-            removed_element = remove(size - 1); // Delegate to remove method to remove the last node
+            removed_element = remove(size - 1);
         } else {
-            throw new NoSuchElementException(); // Throw exception if the list is empty
+            throw new NoSuchElementException();
         }
         return removed_element;
     }
 
-    // This is a placeholder for a more efficient sorting algorithm
+    /**
+     * Sorts the elements of the list in ascending order.
+     * Currently, this method does not implement any sorting logic
+     * and serves as a placeholder for future implementations.
+     */
+    @Override
     public void sort() {
-        // Sorting a linked list efficiently typically requires algorithms like merge sort
-        // This method is just a placeholder
+
     }
 
-    // Get the index of the first occurrence of the given object
+    /**
+     * Returns the index of the first occurrence of the specified element
+     * in this list, or -1 if this list does not contain the element.
+     *
+     * @param object the element to search for
+     * @return the index of the first occurrence of the specified element in
+     *         this list, or -1 if this list does not contain the element
+     */
     public int indexOf(Object object) {
-        int index = 0; // Initialize index
+        int index = 0;
         for (Node<T> x = head; x != null; x = x.next, index++) {
             if (object.equals(x.element)) {
-                return index; // Return index if object is found
+                return index;
             }
         }
-        return -1; // Return -1 if object is not found
+        return -1;
     }
 
-    // Get the index of the last occurrence of the given object
+    /**
+     * Returns the index of the last occurrence of the specified element
+     * in this list, or -1 if this list does not contain the element.
+     *
+     * @param object the element to search for
+     * @return the index of the last occurrence of the specified element in
+     *         this list, or -1 if this list does not contain the element
+     */
     public int lastIndexOf(Object object) {
-        int index = size; // Initialize index
+        int index = size;
         for (Node<T> x = tail; x != null; x = x.prev, index--) {
             if (object.equals(x.element)) {
-                return index; // Return index if object is found
+                return index;
             }
         }
-        return -1; // Return -1 if object is not found
+        return -1;
     }
 
-    // Check if the given object exists in the linked list
+    /**
+     * Returns true if this list contains the specified element.
+     *
+     * @param object element whose presence in this list is to be tested
+     * @return {@code true} if this list contains the specified element
+     */
     public boolean exists(Object object) {
-        return indexOf(object) >= 0; // Return true if object is found
+        return indexOf(object) >= 0;
     }
 
-    // Convert the linked list to an array
+    /**
+     * Returns an array containing all of the elements in this list in proper sequence (from first to last element).
+     *
+     * @return an array containing all of the elements in this list in proper sequence
+     */
     public Object[] toArray() {
-        Object[] array = new Object[size]; // Create an array of size equal to the list size
-        int i = 0; // Initialize index
+        Object[] array = new Object[size];
+        int i = 0;
         for (Node<T> x = head; x != null; x = x.next) {
-            array[i++] = x.element; // Copy elements of the linked list to the array
+            array[i++] = x.element;
         }
-        return array; // Return the array
+        return array;
     }
 
-    // Clear the linked list
+    /**
+     * Removes all of the elements from this list.
+     * The list will be empty after this call returns.
+     */
     public void clear() {
-        head = null; // Set head to null
-        tail = null; // Set tail to null
-        size = 0; // Reset size to 0
+        head = null;
+        tail = null;
+        size = 0;
     }
 
-    // Get the size of the linked list
+    /**
+     * Returns the number of elements in this list.
+     *
+     * @return the number of elements in this list
+     */
     public int size() {
-        return size; // Return the size of the linked list
+        return size;
     }
 
-    // Check if the linked list is empty
+    /**
+     * Returns {@code true} if this list contains no elements.
+     *
+     * @return {@code true} if this list contains no elements
+     */
     public boolean isEmpty() {
-        return size == 0; // Return true if the size is 0
+        return size == 0;
     }
 
-    // Get the node at the specified index
+    /**
+     * Returns a node at a specific index.
+     *
+     * @param index the index of the node to return
+     * @return the node at the specified index
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
     private Node<T> getNode(int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException(); // Throw exception if index is invalid
+            throw new IndexOutOfBoundsException();
         }
         Node<T> x;
         if (index < (size >> 1)) {
             x = head;
             for (int i = 0; i < index; i++) {
-                x = x.next; // Traverse forward from the head
+                x = x.next;
             }
         } else {
             x = tail;
             for (int i = size - 1; i > index; i--) {
-                x = x.prev; // Traverse backward from the tail
+                x = x.prev;
             }
         }
-        return x; // Return the node at the specified index
+        return x;
     }
 
-    // Iterator implementation to iterate over the elements of the linked list
+    /**
+     * Returns an iterator over the elements in this list in proper sequence.
+     *
+     * @return an Iterator over the elements in this list in proper sequence
+     */
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            private Node<T> next = head; // Initialize next node to the head
+            private Node<T> next = head;
 
             @Override
             public boolean hasNext() {
-                return next != null; // Check if there is a next node
+                return next != null;
             }
 
             @Override
             public T next() {
-                if (!hasNext()) throw new NoSuchElementException(); // Throw exception if there is no next node
-                T element = next.element; // Get the element of the next node
-                next = next.next; // Move to the next node
-                return element; // Return the element
+                if (!hasNext()) throw new NoSuchElementException();
+                T element = next.element;
+                next = next.next;
+                return element;
             }
         };
-    }
-    public static void main(String[] args) {
-        // Demonstrating LinkedList-based implementations
-        System.out.println("\n****** LinkedList-based Implementations ******");
-
-        // Stack Example using LinkedList
-        System.out.println("\n--- LinkedList Stack Example ---");
-        MyLinkedStack<String> linkedListStack = new MyLinkedStack<>();
-        linkedListStack.push("Apple");
-        linkedListStack.push("Banana");
-        linkedListStack.push("Cherry");
-
-        System.out.println("Current top (Peek): " + linkedListStack.peek());
-        System.out.println("Popping elements from the stack...");
-        while (!linkedListStack.isEmpty()) {
-            System.out.println("Popped: " + linkedListStack.pop());
-        }
-        System.out.println("Is the stack empty? " + linkedListStack.isEmpty());
-
-        // Queue Example using LinkedList
-        System.out.println("\n--- LinkedList Queue Example ---");
-        MyLinkedQueue<String> linkedListQueue = new MyLinkedQueue<>();
-        linkedListQueue.enqueue("Monday");
-        linkedListQueue.enqueue("Tuesday");
-        linkedListQueue.enqueue("Wednesday");
-
-        System.out.println("First element (Peek): " + linkedListQueue.peek());
-        System.out.println("Dequeuing elements...");
-        while (!linkedListQueue.isEmpty()) {
-            System.out.println("Dequeued: " + linkedListQueue.dequeue());
-        }
-        System.out.println("Is the queue empty? " + linkedListQueue.isEmpty());
-
-        System.out.println("\n--- LinkedList MinHeap Example ---");
-        MyLinkedMinHeap<Integer> linkedListMinHeap = new MyLinkedMinHeap<>();
-
-        // Insert elements into the MinHeap
-        System.out.println("Inserting elements into MinHeap:");
-        int[] numbers = {10, 5, 15, 3, 8, 20, 2};
-        for (int number : numbers) {
-            linkedListMinHeap.add(number);
-            System.out.println("Inserted: " + number);
-        }
-        // Display the minimum element without removing it
-//        System.out.println("\nCurrent Minimum (Peek): " + linkedListMinHeap.getMin());
-
-        // Extracting elements from the MinHeap
-        System.out.println("\nExtracting all elements from MinHeap in sorted order:");
-        while (!linkedListMinHeap.isEmpty()) {
-            System.out.println("Extracted Min: " + linkedListMinHeap.extractMin());
-        }
-
-        // Check if the MinHeap is empty after removals
-        System.out.println("\nIs the MinHeap empty? " + linkedListMinHeap.isEmpty());
     }
 }
