@@ -7,19 +7,18 @@ import java.util.NoSuchElementException;
  * @param <T> the type of elements held in this queue
  */
 public class MyLinkedQueue<T> {
-    private Node<T> head; // Head node of the queue, where elements are dequeued from
-    private Node<T> tail; // Tail node of the queue, where elements are enqueued
-    private int size; // Number of elements in the queue
+    private Node<T> head;
+    private Node<T> tail;
+    private int size;
 
     /**
      * Inner static class representing a node in the linked list.
      * Each node stores a reference to an element and the next node in the queue.
      */
     private static class Node<T> {
-        T element; // The element stored in this node
-        Node<T> next; // Reference to the next node in the queue
+        T element;
+        Node<T> next;
 
-        // Constructor to initialize the node with an element and the next node reference
         Node(T element, Node<T> next) {
             this.element = element;
             this.next = next;
@@ -30,9 +29,9 @@ public class MyLinkedQueue<T> {
      * Constructor to initialize an empty queue.
      */
     public MyLinkedQueue() {
-        this.head = null; // Initialize the head of the queue as null
-        this.tail = null; // Initialize the tail of the queue as null
-        this.size = 0;   // Initialize the size of the queue as 0
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
     }
 
     /**
@@ -41,14 +40,14 @@ public class MyLinkedQueue<T> {
      * @param item the item to be added to the queue
      */
     public void enqueue(T item) {
-        Node<T> newNode = new Node<>(item, null); // Create a new node for the item
+        Node<T> newNode = new Node<>(item, null);
         if (tail == null) {
-            head = tail = newNode; // If the queue is empty, head and tail point to the new node
+            head = tail = newNode;
         } else {
-            tail.next = newNode; // Link the new node at the end of the queue
-            tail = newNode; // Update the tail to the new node
+            tail.next = newNode;
+            tail = newNode;
         }
-        size++; // Increment the size of the queue
+        size++;
     }
 
     /**
@@ -58,16 +57,16 @@ public class MyLinkedQueue<T> {
      * @throws NoSuchElementException if the queue is empty
      */
     public T dequeue() {
-        if (head == null) { // Check if the queue is empty
+        if (head == null) {
             throw new NoSuchElementException("Queue is empty.");
         }
-        T item = head.element; // Retrieve the element from the head node
-        head = head.next; // Move the head to the next node in the queue
+        T item = head.element;
+        head = head.next;
         if (head == null) {
-            tail = null; // If the queue is now empty, tail must also be null
+            tail = null;
         }
-        size--; // Decrement the size of the queue
-        return item; // Return the dequeued item
+        size--;
+        return item;
     }
 
     /**
@@ -77,10 +76,10 @@ public class MyLinkedQueue<T> {
      * @throws NoSuchElementException if the queue is empty
      */
     public T peek() {
-        if (head == null) { // Check if the queue is empty
+        if (head == null) {
             throw new NoSuchElementException("Queue is empty.");
         }
-        return head.element; // Return the element from the head node
+        return head.element;
     }
 
     /**
@@ -89,7 +88,7 @@ public class MyLinkedQueue<T> {
      * @return the size of the queue
      */
     public int size() {
-        return size; // Return the size of the queue
+        return size;
     }
 
     /**
@@ -98,6 +97,6 @@ public class MyLinkedQueue<T> {
      * @return true if the queue has no elements, false otherwise
      */
     public boolean isEmpty() {
-        return size == 0; // Return true if the size is 0, indicating the queue is empty
+        return size == 0;
     }
 }
