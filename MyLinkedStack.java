@@ -7,18 +7,33 @@ import java.util.NoSuchElementException;
  * @param <T> the type of elements held in this stack.
  */
 public class MyLinkedStack<T> {
-    private Node<T> top;  // The top node of the stack
-    private int size;     // Number of elements in the stack
+    private Node<T> top;
+    private int size;
 
     /**
-     * Inner static class representing a node in the stack.
-     * Each node stores a reference to an element and the next node in the stack.
+     * Represents a node in a linked list structure. Each node contains a generic element
+     * and a reference to the next node in the list. This class is typically used to construct
+     * data structures like stacks or queues where elements are linked sequentially.
+     *
+     * @param <T> The type of the element stored in the node.
      */
     private static class Node<T> {
-        T element;           // The element stored in this node
-        Node<T> next;        // Reference to the next node in the stack
+        /**
+         * The element contained in this node.
+         */
+        T element;
 
-        // Constructor to initialize the node with an element and the next node reference
+        /**
+         * The reference to the next node in the list.
+         */
+        Node<T> next;
+
+        /**
+         * Constructs a new node with the specified element and next node reference.
+         *
+         * @param element The element to store in this node.
+         * @param next The next node in the list.
+         */
         Node(T element, Node<T> next) {
             this.element = element;
             this.next = next;
@@ -29,8 +44,8 @@ public class MyLinkedStack<T> {
      * Constructor to initialize an empty stack.
      */
     public MyLinkedStack() {
-        this.top = null; // Initialize the top of the stack as null
-        this.size = 0;   // Initialize the size of the stack as 0
+        this.top = null;
+        this.size = 0;
     }
 
     /**
@@ -39,10 +54,8 @@ public class MyLinkedStack<T> {
      * @param item the item to be pushed onto the stack
      */
     public void push(T item) {
-        // Create a new node with the item, making it the new top of the stack
-        // The new node points to the previous top node
         top = new Node<>(item, top);
-        size++; // Increment the size of the stack
+        size++;
     }
 
     /**
@@ -52,13 +65,13 @@ public class MyLinkedStack<T> {
      * @throws NoSuchElementException if the stack is empty
      */
     public T pop() {
-        if (top == null) { // Check if the stack is empty
+        if (top == null) {
             throw new NoSuchElementException("Stack is empty.");
         }
-        T item = top.element; // Get the item from the top of the stack
-        top = top.next; // Remove the top node by moving the top reference to the next node
-        size--; // Decrement the size of the stack
-        return item; // Return the removed item
+        T item = top.element;
+        top = top.next;
+        size--;
+        return item;
     }
 
     /**
@@ -68,10 +81,10 @@ public class MyLinkedStack<T> {
      * @throws NoSuchElementException if the stack is empty
      */
     public T peek() {
-        if (top == null) { // Check if the stack is empty
+        if (top == null) {
             throw new NoSuchElementException("Stack is empty.");
         }
-        return top.element; // Return the item from the top of the stack
+        return top.element;
     }
 
     /**
@@ -80,7 +93,7 @@ public class MyLinkedStack<T> {
      * @return the size of the stack
      */
     public int size() {
-        return size; // Return the size of the stack
+        return size;
     }
 
     /**
@@ -89,6 +102,6 @@ public class MyLinkedStack<T> {
      * @return true if the stack has no elements, false otherwise
      */
     public boolean isEmpty() {
-        return top == null; // Return true if the top is null, indicating the stack is empty
+        return top == null;
     }
 }
